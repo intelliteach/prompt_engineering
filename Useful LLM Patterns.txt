@@ -1,0 +1,296 @@
+
+ USEFUL LLM PATTERNS
+
+
+
+
+
+The Flipped Interaction Pattern
+--------------------------------
+
+ Rather than having the user drives a conversation, an LLM often has knowledge it can use to more accurately obtain information from the user. The goal of the
+Flipped Interaction pattern is to flip the interaction flow so the
+LLM asks the user questions to achieve some desired goal. The
+LLM can often better select the format, number, and content
+of the interactions to ensure that the goal is reached faster,
+more accurately, and/or by using knowledge the user may not
+(initially) possess.
+
+Ex:
+
+From now on, I would like you to ask me questions
+to deploy a Python application to AWS. When you
+have enough information to deploy the application,
+create a Python script to automate the deployment.
+
+Persona pattern
+--------------------------------
+
+Users may not know what types of outputs
+or details are important for an LLM to focus on to achieve
+a given task. They may know, however, the role or type of
+person that they would normally ask to get help with these
+things. The Persona pattern enables the users to express what
+they need help with without knowing the exact details of the
+outputs they need.
+
+Ex:
+
+From now on, act as a security reviewer. Pay close
+attention to the security details of any code that
+we look at. Provide outputs that a security reviewer
+would regarding the code.
+
+Question Refinement Pattern
+--------------------------------
+
+If a user is asking a question, it is possible
+they are not an expert in the domain and may not know the
+best way to phrase the question or be aware of additional
+information helpful in phrasing the question. LLMs will often
+state limitations on the answer they are providing or request
+additional information to help them produce a more accurate
+answer. An LLM may also state assumptions it made in
+providing the answer. The motivation is that this additional
+information or set of assumptions could be used to generate
+a better prompt. Rather than requiring the user to digest
+and rephrase their prompt with the additional information,
+the LLM can directly refine the prompt to incorporate the
+additional information
+
+Ex:
+
+From now on, whenever I ask a question, ask four
+additional questions that would help you produce a
+better version of my original question. Then, use my
+answers to suggest a better version of my original
+question
+
+Alternative Approaches pattern
+--------------------------------
+
+Humans often suffer from cognitive biases
+that lead them to choose a particular approach to solve a
+problem even when it is not the right or “best” approach.
+Moreover, humans may be unaware of alternative approaches
+to what they have used in the past. The motivation of the
+Alternative Approaches pattern is to ensure the user is aware
+of alternative approaches to select a better approach to solve
+a problem by dissolving their cognitive biases
+
+Ex:
+
+Whenever I ask you to deploy an application to
+a specific cloud service, if there are alternative
+services to accomplish the same thing with the
+same cloud service provider, list the best alternative
+services and then compare/contrast the pros and cons
+of each approach with respect to cost, availability,
+and maintenance effort and include the original way
+that I asked. Then ask me which approach I would
+like to proceed with
+
+
+Cognitive Verifier pattern
+--------------------------------
+
+Humans may initially ask questions that are too highlevel to provide a concrete answer to without additional follow-up due to unfamiliarity with the domain, laziness
+in prompt entry, or being unsure about what the correct
+phrasing of the question should be.
+Research has demonstrated that LLMs can often perform
+better when using a question that is subdivided into
+individual questions
+
+Ex:
+
+When I ask you a question, generate three additional questions that would help you give a more accurate answer. When I have answered the three
+questions, combine the answers to produce the final
+answers to my original question
+
+Fact Check list pattern
+--------------------------------
+
+A current weakness of LLMs (including
+ChatGPT) is they often rapidly (and even enthusiastically!)
+generate convincing text that is factually incorrect. These
+errors can take a wide range of forms, including fake statistics
+to invalid version numbers for software library dependencies.
+Due to the convincing nature of this generated text, however,
+users may not perform appropriate due diligence to determine
+its accuracy.
+
+Ex:
+From now on, when you generate an answer, create
+a set of facts that the answer depends on that should
+be fact-checked and list this set of facts at the
+end of your output. Only include facts related to
+cybersecurity
+
+
+The Template Pattern
+--------------------------------
+
+In some cases, output must be produced in
+a precise format that is application or use-case specific and
+not known to the LLM. Since the LLM is not aware of the
+template structure, it must be instructed on what the format
+is and where the different parts of its output should go. This
+could take the form of a sample data structure that is being
+generated, a series of form letters being filled in, etc
+
+Ex:
+
+I am going to provide a template for your output. Everything in all caps is a placeholder. Any time that you generate text, try to fit it into one
+of the placeholders that I list. Please preserve the
+formatting and overall template that I provide at
+https://myapi.com/NAME/profile/JOB”
+
+A sample interaction after the prompt was provided, is
+shown:
+User: “Generate a name and job title for a person”
+ChatGPT: “https://myapi.com/Emily Parker/profile/
+Software Engineer
+
+
+The Infinite Generation Pattern
+--------------------------------
+
+Many tasks require repetitive application of
+the same prompt to multiple concepts. For example, generating
+code for create, read, update, and delete (CRUD) operations
+for a specific type of entity may require applying the same
+prompt to multiple types of entities. If the user is forced to
+retype the prompt over and over, they may make mistakes. The
+Infinite Generation pattern allows the user to repetitively apply
+a prompt, either with or without further input, to automate
+the generation of multiple outputs using a predefined set of
+constraints.
+
+Ex:
+
+From now on, I want you to generate a name
+and job until I say stop. I am going to provide a
+template for your output. Everything in all caps is a
+placeholder. Any time that you generate text, try to
+fit it into one of the placeholders that I list. Please
+preserve the formatting and overall template that I
+provide: https://myapi.com/NAME/profile/JOB”
+
+ The Visualization Generator Pattern
+-------------------------------------
+
+LLMs generally produce text and cannot
+produce imagery. For example, an LLM cannot draw a diagram
+to describe a graph. The Visualization Generator pattern overcomes this limitation by generating textual inputs in the correct
+format to plug into another tool that generates the correct
+diagram. The motivation behind this pattern is to enhance the
+output of the LLM and make it more visually appealing and
+easier to understand for users. By using text inputs to generate
+visualizations, users can quickly understand complex concepts
+and relationships that may be hard to grasp through text alone
+
+Ex:
+
+Whenever I ask you to visualize something, please
+create either a Graphviz Dot file or DALL-E prompt
+that I can use to create the visualization. Choose
+the appropriate tools based on what needs to be
+visualized.
+
+The Reflection Pattern
+-------------------------------------
+
+LLMs can and do make mistakes. Moreover, users may not understand why an LLM is producing
+a particular output and how to adapt their prompt to solve
+a problem with the output. By asking LLM to automatically
+explain the rationale behind its answers, users can gain a better
+understanding of how the model is processing the input, what
+assumptions it is making, and what data it is drawing on.
+LLMs may sometime provide incomplete, incorrect, or
+ambiguous answers. Reflection is an aid to help address these
+shortcomings and ensure the information provided by LLM
+is as accurate. A further benefit of the pattern is that it can
+help users debug their prompts and determine why they are
+not getting results that meet expectations. This pattern is
+particularly effective for the exploration of topics that can
+be confused with other topics or that may have nuanced
+interpretations and where knowing the precise interpretation
+that the LLM used is important.
+
+Ex:
+When you provide an answer, please explain the
+reasoning and assumptions behind your selection
+of software frameworks. If possible, use specific
+examples or evidence with associated code samples
+to support your answer of why the framework is
+the best selection for the task. Moreover, please
+address any potential ambiguities or limitations in
+your answer, in order to provide a more complete
+and accurate response.
+
+
+The Refusal Breaker Pattern
+------------------------------
+LLMs may sometimes refuse to answer
+a question, either because they do not have the required
+knowledge or because the question is phrased in a way that
+they do not understand. This outcome may be frustrating
+for users who are looking for answers. In some situations,
+therefore, the Refusal Breaker pattern can help users find a
+way to either rephrase their question or ask a different question
+the LLM is better equipped to answer
+
+Ex:
+
+Whenever you can’t answer a question, explain why
+and provide one or more alternate wordings of the
+question that you can’t answer so that I can improve
+my questions
+
+
+ The Context Manager Pattern
+ -----------------------------
+LLMs often struggle to interpret the intended context of the current question or generate irrelevant responses based on prior inputs or irrelevant attention on
+the wrong statements. By focusing on explicit contextual
+statements or removing irrelevant statements, users can help
+the LLM better understand the question and generate more
+accurate responses. Users may introduce unrelated topics or
+reference information from earlier in the dialogue, which
+may can disrupt the flow of the conversation. The Context
+Manager pattern aims to emphasize or remove specific aspects
+of the context to maintain relevance and coherence in the
+conversation.
+
+Examples:
+“When analyzing the following pieces of code, only
+consider security aspects.”
+“When analyzing the following pieces of code, do
+not consider formatting or naming conventions.”
+
+The Recipe Pattern
+-------------------------------
+
+Users often want an LLM to analyze a
+concrete sequence of steps or procedures to achieve a stated
+outcome. Typically, users generally know—or have an idea
+of—what the end goal should look like and what “ingredients”
+belong in the prompt. However, they may not necessarily know
+the precise ordering of steps to achieve that end goal.
+For example, a user may want a precise specification on how
+a piece of code should be implemented or automated, such as
+“create an Ansible playbook to ssh into a set of servers, copy
+text files from each server, spawn a monitoring process on
+each server, and then close the ssh connection to each server.
+In other words, this pattern represents a generalization of the
+example of “given the ingredients in my fridge, provide dinner
+recipes.” A user may also want to specify a set number of
+alternative possibilities, such as “provide 3 different ways of
+deploying a web application to AWS using Docker containers
+and Ansible using step by step instructions”
+
+Ex:
+“I am trying to deploy an application to the cloud. I
+know that I need to install the necessary dependencies on a virtual machine for my application. I know that I need to sign up for an AWS account. Please
+provide a complete sequence of steps. Please fill in
+any missing steps. Please identify any unnecessary
+steps.”
